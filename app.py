@@ -16,6 +16,60 @@ def load_data(file_source):
         st.error(f"Error loading file: {e}")
         return None
 
+def update_master_from_uploaded(uploaded_file):
+    """
+    Saves uploaded file to data/ folder, updates master matrix, 
+    and returns the merged dataframe.
+    """
+    # 1. Save uploaded file backup
+    data_dir = "data"
+    os.makedirs(data_dir, exist_ok=True)
+    
+    # Use original filename
+    file_path = os.path.join(data_dir, uploaded_file.name)
+    
+    # Save file
+    with open(file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+        
+    # 2. Load data
+    new_data = pd.read_excel(file_path)
+    if 'Period' not in new_data.columns:
+        st.error("Uploaded file must have a 'Period' column for versioning.")
+        return new_data
+
+    # 3. Load or Create Master
+    master_dir = "master"
+    os.makedirs(master_dir, exist_ok=True)
+    master_path = os.path.join(master_dir, "master.xlsx")
+    
+    if os.path.exists(master_path):
+        master_df = pd.read_excel(master_path)
+        # Ensure Period is datetime for comparison
+        master_df['Period'] = pd.to_datetime(master_df['Period'])
+        new_data['Period'] = pd.to_datetime(new_data['Period'])
+        
+        # Identify new rows (using Period as unique ID)
+        existing_periods = set(master_df['Period'])
+        # Filter new_data for rows where Period is NOT in existing_periods
+        unique_new_data = new_data[~new_data['Period'].isin(existing_periods)]
+        
+        if not unique_new_data.empty:
+            master_df = pd.concat([master_df, unique_new_data], ignore_index=True)
+            # Save updated master
+            master_df.to_excel(master_path, index=False)
+            st.success(f"Master updated! Added {len(unique_new_data)} new records.")
+    else:
+        # Create new master
+        master_df = new_data.copy()
+        # Ensure Period is datetime
+        master_df['Period'] = pd.to_datetime(master_df['Period'])
+        master_df.to_excel(master_path, index=False)
+        st.success("Master file created successfully!")
+
+    return master_df
+
+
 def main():
     st.title("Monthly Budget Data Filter")
 
@@ -28,7 +82,8 @@ def main():
     uploaded_file = st.sidebar.file_uploader("Upload Excel File", type=["xlsx"])
 
     if uploaded_file:
-        df = load_data(uploaded_file)
+        # Update Master and Load Data
+        df = update_master_from_uploaded(uploaded_file)
     else:
         st.info("Please upload an Excel file to proceed.")
         st.stop()
