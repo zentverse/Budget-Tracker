@@ -1,0 +1,6 @@
+streamlit
+pandas
+requests
+deep-translator
+matplotlib
+openpyxl

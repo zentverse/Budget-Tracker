@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import requests
-from datetime import date
+from datetime import date, datetime
 from io import BytesIO, StringIO
 
 # Set page config
@@ -18,6 +18,9 @@ def load_data(file_source):
 
 def main():
     st.title("Monthly Budget Data Filter")
+
+    # Generate timestamp for filenames
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     # --- File Loading ---
     # Sidebar Header
@@ -250,7 +253,7 @@ def main():
                 st.download_button(
                     label="Download Translated Excel",
                     data=processed_data_si,
-                    file_name="translated_data.xlsx",
+                    file_name=f"translated_data_{timestamp}.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     key="download_excel_si"
                 )
@@ -294,7 +297,7 @@ def main():
                 st.download_button(
                     label="Download Translated Image",
                     data=img_data_si,
-                    file_name="translated_table.png",
+                    file_name=f"translated_table_{timestamp}.png",
                     mime="image/png",
                     key="download_img_si"
                 )
@@ -312,7 +315,7 @@ def main():
             st.download_button(
                 label="Download Filtered Excel",
                 data=processed_data,
-                file_name="filtered_data.xlsx",
+                file_name=f"filtered_data_{timestamp}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
 
@@ -360,7 +363,7 @@ def main():
             st.download_button(
                 label="Download as Image (PNG)",
                 data=img_data,
-                file_name="table_image.png",
+                file_name=f"table_image_{timestamp}.png",
                 mime="image/png"
             )
 
