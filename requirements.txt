@@ -1,6 +1,11 @@
+# Core
 streamlit
 pandas
 requests
-deep-translator
-matplotlib
+
+# Data Processing
 openpyxl
+
+# Visualization & Translation
+matplotlib
+deep-translator

@@ -3,13 +3,25 @@
 A Streamlit application for filtering and translating monthly budget data from Excel files.
 
 ## Features
+- **Upload & Auto-Update**:
+    - Upload monthly budget Excel files.
+    - **Master Dataset**: Automatically updates a tracked `master/master.xlsx` file with new unique records (based on `Period` timestamp).
+    - **Backup**: Keeps a local copy of uploaded files in `data/` (ignored by git).
+- **Dynamic Filtering**: Cascading filters for Date, Category, Subcategory, etc.
+- **Favorites**: One-click application of frequently used filter sets.
+- **Translation**: Translate filtered results to **Sinhala** using Google Translate (Deep Translator).
+- **Export Options**:
+    - **Excel**: Download filtered or translated datasets.
+    - **Image (PNG)**: Download a beautifully formatted image of your data table.
+- **Total Row**: Toggle a summary row to see total amounts.
 
-- **Upload Excel Data**: Load your monthly budget `.xlsx` files.
-- **Dynamic Filtering**: Filter by date range, category, subcategory, account, etc.
-- **Favorites**: Quickly apply predefined favorite filters.
-- **Translation**: Translate filtered data to Sinhala using `deep-translator`.
-- **Export**: Download filtered data as Excel or Image (PNG), and translated data as Excel or Image.
-- **Total Row**: Option to add a total row for amounts.
+## Workflow
+1.  **Launch App**: `streamlit run app.py`
+2.  **Upload**: Drag & drop your latest budget Excel file.
+    -   *System Action*: Updates `master/master.xlsx` with new entries and saves backup to `data/`.
+3.  **Filter**: Use the sidebar to drill down into specific expenses/incomes.
+4.  **Visualize/Translate**: Check your data, optionally translate to Sinhala.
+5.  **Export**: Download the result as an Excel sheet or a PNG image for sharing.
 
 ## Setup
 

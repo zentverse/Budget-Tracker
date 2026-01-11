@@ -1,19 +1,25 @@
-# Python
+# --- Python ---
 __pycache__/
 *.pyc
 
-# Virtual Environment
+# --- Environment ---
 venv/
 .venv/
 env/
 
-# Data
+# --- Data Handling ---
+# Ignore all Excel/CSV data files to prevent leaking personal info
 *.xlsx
 *.csv
 
-# OS
+# --- Exceptions (Tracked Files) ---
+# Allow tracking of the Master dataset
+!master/*.xlsx
+
+# --- Application Data Folders ---
+# Ignore raw data uploads backup folder
+data/
+
+# --- OS Specific ---
 .DS_Store
 Thumbs.db
-
-data/
-!master/*.xlsx
