@@ -16,3 +16,4 @@ env/
 Thumbs.db
 
 data/
+!master/*.xlsx
