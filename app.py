@@ -102,7 +102,7 @@ def main():
         st.sidebar.header("Filters")
         
         # EXCLUDED COLUMNS
-        EXCLUDED_COLS = ['Note', 'LKR', 'Description', 'Amount', 'Currency', 'Accounts.1', 'Accounts']
+        EXCLUDED_COLS = ['Note', 'LKR', 'Description', 'Amount', 'Currency', 'Accounts.1']
         
         # --- Favorites Logic ---
         def apply_favorites():
@@ -156,6 +156,8 @@ def main():
         # 2. Handle Categorical Columns SEQUENTIALLY (Waterfall/Cascading)
         # Options for Col B depend on selection in Col A
         other_cols = [c for c in df.columns if c not in date_cols and c not in EXCLUDED_COLS]
+        if 'Accounts' in other_cols:
+            other_cols.insert(0, other_cols.pop(other_cols.index('Accounts')))
         
         for col in other_cols:
             # GET OPTIONS FROM CURRENTLY FILTERED DATA

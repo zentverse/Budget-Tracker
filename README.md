@@ -17,6 +17,7 @@ A Streamlit application for filtering and translating monthly budget data from E
 
 ## Workflow
 1.  **Launch App**: `streamlit run app.py`
+    -   *Default URL*: `http://localhost:3069`
 2.  **Upload**: Drag & drop your latest budget Excel file.
     -   *System Action*: Updates `master/master.xlsx` with new entries and saves backup to `data/`.
 3.  **Filter**: Use the sidebar to drill down into specific expenses/incomes.
@@ -44,4 +45,4 @@ Run the Streamlit app:
 ```bash
 streamlit run app.py
 ```
-The application will open in your default web browser.
+The application will open in your default web browser on `http://localhost:3069`.
